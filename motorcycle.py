@@ -14,8 +14,7 @@ class Motorcycle(Vehicle):
 
         three_fourths_speed = int(self._speed * .75)
         random_speed = random.randint(three_fourths_speed - 1, three_fourths_speed + 1)
-        position = self._position
-        obs_loc1 = obs_loc[0]
+
 
         if self._position + random_speed >= 100:
             self._position = 100
@@ -31,28 +30,35 @@ class Motorcycle(Vehicle):
         Args:
             obs_loc (int): the location of the obstacle
         Return:
-
+            formatted string of action performed
         """
         if self._energy >= 15:
             self._energy -= 15
             chance = random.randint(0,100)
             random_speed = self._speed * 2 + random.randint(-1,1)
+            int(random_speed)
 
             if chance <= 75:
 
                 if self._position + random_speed > obs_loc[0] > self._position:
                     self._position = obs_loc[0] - 1
-                    return f"{self._name} has crashed!"
+                    return f"{self._name} has crashed into the obstacle!"
+
                 elif self._position + random_speed > obs_loc[1] > self._position:
                     self._position = obs_loc[1] - 1
-                    return f"{self._name} has crashed!"
+                    return f"{self._name} has crashed into the obstacle!"
+
                 elif self._position + random_speed >= 100 >= self._position:
                     self._position = 100
                     return f"{self._name} has finished the race"
+
                 else:
                     self._position += random_speed
+                    return f"{self._name} boosts {random_speed} spaces to {self._position}"
             else:
                 self._position += 1
+                return f"{self._name} has failed to boost and moves 1 space to {self._position}"
 
         else:
             self._position += 1
+            return f"{self._name} has failed to boost and moves 1 space to {self._position}"

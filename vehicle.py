@@ -34,25 +34,40 @@ class Vehicle(abc.ABC):
 
     @property
     def initial(self):
+        """
+        The vehicle's initial to be used on the track
+        Return:
+            self._initial (str) : The initial of the vehicle
+        """
         return self._initial
 
     @property
     def position(self):
+        """
+        The vehicle's position
+        Return:
+            self._position (int) : The vehicle's position
+        """
         return self._position
 
     @property
     def energy(self):
+        """
+        The amount of energy the vehicle has
+        Return:
+            self._energy (int) : the vehicle's energy
+        """
         return self._energy
 
     def fast(self, obs_loc):
         """
-        passes in the location of the next obstacle. If there is sufficient energy, +/- 1 speed for the spaces they will move.
-        if the amount moved is less than distance to obstacle then move that amount.
-        otherwise, crash and land on the obstacle space.
+        passes in the location of the pair of obstacles. if the car has 5 energy, it can move fast. If the car will pass
+        an obstacle crash into it. otherwise move that amount.
         If there was not sufficient energy, move 1 space.
+        Sets the position to 100 if the car will finish the race.
         Args:
             obs_loc (list): position where obstruction is
-        returns:
+        Return:
             formatted string of event that occurred with vehicle name and amount moved.
         """
 
@@ -65,10 +80,12 @@ class Vehicle(abc.ABC):
 
             if vehicle_position < obs_loc[0] <= vehicle_position + vehicle_speed:
                 self._position = obs_loc[0] - 1
-                return f"{self._name} has crashed!"
+                return f"{self._name} has crashed into the obstacle!"
+
             elif vehicle_position <= obs_loc[1] <= vehicle_position + vehicle_speed:
                 self._position = obs_loc[1] - 1
-                return f"{self._name} has crashed!"
+                return f"{self._name} has crashed into the obstacle!"
+
             elif vehicle_position <= 100 <= vehicle_position + vehicle_speed:
                 self._position = 100
                 return f"{self._name} has finished the race"
@@ -76,22 +93,25 @@ class Vehicle(abc.ABC):
                 self._position += vehicle_speed
 
         else:
-            self._position += 1
+            if self._position < 100:
+                self._position += 1
+            else:
+                self._position = 100
 
         return f"{self._name} swiftly moves {vehicle_speed} spaces to {self._position}"
 
     def slow(self, obs_loc):
         """
-        Vehicle moves at half speed +/- 1. Passes obstacles if there is one in the way.
+        Vehicle moves at half speed +/- 1. Uses floor division to get half speed Ignores obstacles if there is one in
+        the way.
         Args:
             obs_loc (int): passes in position of obstacle
-        return:
+        Return:
             formatted string of event that occurred with vehicle name and amount moved.
         """
 
         half_speed = self._speed // 2
         random_speed = random.randint(half_speed - 1, half_speed + 1)
-        position = self._position
 
         if self._position + random_speed >= 100:
             self._position = 100
@@ -103,8 +123,8 @@ class Vehicle(abc.ABC):
 
     def __str__(self):
         """
-        Description of vehicle
-        return:
+        Description of vehicle with Name [Position - P Energy - E]
+        Return:
             formatted string of the vehicle
         """
 
@@ -118,7 +138,6 @@ class Vehicle(abc.ABC):
             obs_loc (int): location of obstruction
 
         """
-
         pass
 
 

@@ -74,7 +74,6 @@ def npc_actions(npc, vehicle_list, obs_loc):
         npc (list) : list of NonPlayerCharacters
         vehicle_list (list) : full list of vehicles
         obs_loc (list) : full list of obstructions generated
-    Return:
     """
 
     for i in range(len(npc)):
@@ -85,14 +84,18 @@ def npc_actions(npc, vehicle_list, obs_loc):
         if random_action <= 40:
             npc_choice = 2
             npc_action = choose_action(vehicle_list, npc[i], npc_choice, obs_pos)
+            print(npc_action)
 
         elif random_action <= 70:
             npc_choice = 1
             npc_action = choose_action(vehicle_list, npc[i], npc_choice, obs_pos)
+            print(npc_action)
 
         else:
             npc_choice = 3
             npc_action = choose_action(vehicle_list, npc[i], npc_choice, obs_pos)
+            print(npc_action)
+
 
 
     # return npc_action
@@ -149,12 +152,15 @@ def main():
     previous_positions = [0,0,0]
 
     track = [['-' for i in range(col)] for j in range(rows)]
+
+    # initializes obstruction list. 2 obstructions per track
     obs_loc = [
         [0, 0],
         [0, 0],
         [0, 0]
          ]
 
+    # creates obstacles makes sure they aren't at the start or finish
     for i in range(len(track)):
         for n in range(2):
             obstacle = random.randint(1, 99)
@@ -169,7 +175,7 @@ def main():
           "3. Behemoth Truck - a heavy truck. Speed: 6. Special: Ram (2x speed and it smashes through obstacles).")
 
     # finds npc
-    player_car = check_input.get_int_range("Choose your vehicle (1-3) ", 1, 3)
+    player_car = check_input.get_int_range("Choose your vehicle (1-3): ", 1, 3)
     npc.remove(player_car)
 
     # initializes vehicle list depending on player choice
@@ -187,20 +193,24 @@ def main():
     win_list = []
 
     while len(win_list) < 3:
-
+        # prints vehicles
         print_vehicles(vehicle_list)
         vehicle_positions(vehicle_list, track, previous_positions)
+
+        # prints track
         print_track(track)
 
         if vehicle_list[player_car - 1].position < 100:
+
+            #player character
             player_choice = check_input.get_int_range("Choose Action (1. Fast, 2. Slow, 3. Special Move) : ", 1, 3)
             obs_pos = obstruction_positions(obs_loc, player_car)
             action = choose_action(vehicle_list, player_car, player_choice, obs_pos)
+            print()
             print(action)
 
         npc_actions(npc, vehicle_list, obs_loc)
-        # print(npc_action)
-        # print(obs_pos)
+        print()
 
         win_list = winner_list(vehicle_list, win_list)
 
