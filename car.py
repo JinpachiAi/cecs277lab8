@@ -6,6 +6,7 @@ class Car(Vehicle):
     def special_move(self, obs_loc):
         random_speed = int(self._speed * 1.5 + random.randint(-1, 1))
         if self._energy >= 15:
+            self._energy -= 15
 
             if self._position + random_speed > obs_loc[0] > self._position:
                 self._position = obs_loc[0] - 1

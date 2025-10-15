@@ -63,8 +63,6 @@ class Vehicle(abc.ABC):
 
             self._energy -= 5
 
-            obstruction_location1 = obs_loc[0]
-
             if vehicle_position < obs_loc[0] <= vehicle_position + vehicle_speed:
                 self._position = obs_loc[0] - 1
                 return f"{self._name} has crashed!"
@@ -73,6 +71,7 @@ class Vehicle(abc.ABC):
                 return f"{self._name} has crashed!"
             elif vehicle_position <= 100 <= vehicle_position + vehicle_speed:
                 self._position = 100
+                return f"{self._name} has finished the race"
             else:
                 self._position += vehicle_speed
 
@@ -90,7 +89,7 @@ class Vehicle(abc.ABC):
             formatted string of event that occurred with vehicle name and amount moved.
         """
 
-        half_speed = self._speed / 2
+        half_speed = self._speed // 2
         random_speed = random.randint(half_speed - 1, half_speed + 1)
         position = self._position
 
