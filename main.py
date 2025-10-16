@@ -66,6 +66,12 @@ def obstruction_positions(obs_loc, player):
     return positions
 
 def update_npc(npc, vehicle_list):
+    """
+    updates the npc list. removes npc from the list if they completed the race
+    Args:
+        npc (list) : list of npc players
+        vehicle_list (list) : list of vehicles
+    """
     if vehicle_list[0].position >= 100:
         if 1 in npc:
             npc.remove(1)
