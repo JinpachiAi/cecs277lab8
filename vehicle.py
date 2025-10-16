@@ -112,9 +112,19 @@ class Vehicle(abc.ABC):
 
         half_speed = self._speed // 2
         random_speed = random.randint(half_speed - 1, half_speed + 1)
+        vehicle_position = self._position
 
         if self._position + random_speed >= 100:
             self._position = 100
+            return f"{self._name} has finished the race"
+
+        elif vehicle_position < obs_loc[0] <= vehicle_position + random_speed:
+            self._position += random_speed
+            return f"{self._name} has swerved around the obstacle!"
+
+        elif vehicle_position <= obs_loc[1] <= vehicle_position + random_speed:
+            self._position += random_speed
+            return f"{self._name} has swerved around the obstacle!"
         else:
             self._position += random_speed
 

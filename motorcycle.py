@@ -14,10 +14,18 @@ class Motorcycle(Vehicle):
 
         three_fourths_speed = int(self._speed * .75)
         random_speed = random.randint(three_fourths_speed - 1, three_fourths_speed + 1)
+        vehicle_position = self._position
 
 
         if self._position + random_speed >= 100:
             self._position = 100
+        elif vehicle_position < obs_loc[0] <= vehicle_position + random_speed:
+            self._position += random_speed
+            return f"{self._name} has swerved around the obstacle!"
+
+        elif vehicle_position <= obs_loc[1] <= vehicle_position + random_speed:
+            self._position += random_speed
+            return f"{self._name} has swerved around the obstacle!"
         else:
             self._position += random_speed
 
@@ -54,10 +62,10 @@ class Motorcycle(Vehicle):
 
                 else:
                     self._position += random_speed
-                    return f"{self._name} boosts {random_speed} spaces to {self._position}"
+                    return f"{self._name} pops a wheelie and moves {random_speed} spaces to {self._position}"
             else:
                 self._position += 1
-                return f"{self._name} has failed to boost and moves 1 space to {self._position}"
+                return f"{self._name} has failed a wheelie and fallen over! It moves 1 space to {self._position}"
 
         else:
             self._position += 1

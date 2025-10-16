@@ -32,7 +32,7 @@ class Car(Vehicle):
 
             else:
                 self._position += random_speed
-                return f"{self._name} boosts {random_speed} space to {self._position}"
+                return f"{self._name} nitro boosts forward {random_speed} spaces to {self._position}"
 
         else:
             if self._position < 100:

@@ -75,9 +75,11 @@ def update_npc(npc, vehicle_list):
     if vehicle_list[0].position >= 100:
         if 1 in npc:
             npc.remove(1)
+
     elif vehicle_list[1].position >= 100:
         if 2 in npc:
             npc.remove(2)
+
     elif vehicle_list[2].position >= 100:
         if 3 in npc:
             npc.remove(3)

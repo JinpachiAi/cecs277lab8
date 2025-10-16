@@ -14,13 +14,22 @@ class Truck(Vehicle):
         if self._energy >= 15:
             self._energy -= 15
             random_speed = int(self._speed * 2 + random.randint(-1,1))
+            vehicle_position = self._position
+
 
             if self._position + random_speed >= 100:
                 self._position = 100
                 return f"{self._name} has finished the race"
+            elif vehicle_position < obs_loc[0] <= vehicle_position + random_speed:
+                self._position += random_speed
+                return f"{self._name} has bashed through the obstacle to {self._position}!"
+
+            elif vehicle_position <= obs_loc[1] <= vehicle_position + random_speed:
+                self._position += random_speed
+                return f"{self._name} has bashed through the obstacle to {self._position}!"
             else:
                 self._position += random_speed
-                return f"{self._name} boosts {random_speed} spaces to {self._position}"
+                return f"{self._name} rams forward {random_speed} spaces to {self._position}"
 
 
         else:
