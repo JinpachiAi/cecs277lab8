@@ -65,6 +65,17 @@ def obstruction_positions(obs_loc, player):
     positions.sort()
     return positions
 
+def update_npc(npc, vehicle_list):
+    if vehicle_list[0].position >= 100:
+        if 1 in npc:
+            npc.remove(1)
+    elif vehicle_list[1].position >= 100:
+        if 2 in npc:
+            npc.remove(2)
+    elif vehicle_list[2].position >= 100:
+        if 3 in npc:
+            npc.remove(3)
+
 def npc_actions(npc, vehicle_list, obs_loc):
     """
     For each NonPlayerCharacter generates an action 1 - 100. 40% chance to go slow (choice 2), 30% chance to go fast
@@ -211,8 +222,11 @@ def main():
 
         npc_actions(npc, vehicle_list, obs_loc)
         print()
+        update_npc(npc, vehicle_list)
 
         win_list = winner_list(vehicle_list, win_list)
+
+
 
     for i in range(len(win_list)):
         for j in range(len(vehicle_list)):
